@@ -45,6 +45,12 @@ public class CameraDetectionV2 {
 
     AprilTagDetection tagOfInterest = null;
     Telemetry telemetry = null;
+    LinearOpMode linearOpMode = new LinearOpMode() {
+        @Override
+        public void runOpMode() throws InterruptedException {
+            sleep(20);
+        }
+    };
 
     public void initTele(Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -74,7 +80,7 @@ public class CameraDetectionV2 {
         telemetry.setMsTransmissionInterval(50);
     }
 
-    public void detect() {
+    public void detect() throws InterruptedException {
         ArrayList<AprilTagDetection> currentDetections = aprilTagDetectionPipeline.getLatestDetections();
 
         if(currentDetections.size() != 0)
@@ -129,7 +135,7 @@ public class CameraDetectionV2 {
         }
 
         telemetry.update();
-        //sleep(20);
+        linearOpMode.runOpMode();
     }
 
     void tagToTelemetry(AprilTagDetection detection)
